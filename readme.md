@@ -2,8 +2,8 @@
 
 
 ##CI servers table
-  | IP ADDR     | HOST NAME | COMPONENTS to INSTALL | PORTS EXPOSED TO HOST (vm port->host) |
-  | ------------- | ------------- | ----- | ----- |
+  | IP ADDR      | HOST NAME         | COMPONENTS to INSTALL | PORTS EXPOSED TO HOST (vm port->host) |
+  | -------------| ---------------   | ----- | ----- |
   | 172.16.1.101 | artifactory.cilab | `nexus`, `java` | 8081->38081 |
   | 172.16.1.102 | gitserver.cilab | `gitlabserver` | 80->38000 |
   | 172.16.1.103 | buildserver.cilab| `jenkins`, `SCM tools`, `BUILD tools` | 8080->38080 |

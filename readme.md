@@ -2,6 +2,7 @@
 
 
 ##CI servers table
+
   | IP ADDR      | HOST NAME         | COMPONENTS to INSTALL | PORTS EXPOSED TO HOST (vm port->host) |
   | -------------| ---------------   | ----- | ----- |
   | 172.16.1.101 | artifactory.cilab | `nexus`, `java` | 8081->38081 |

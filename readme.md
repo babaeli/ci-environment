@@ -10,8 +10,8 @@
   | 172.16.1.104 | buildnode.cilab | `SCM tools`, `BUILD tools` | 80->38095 |
 
 ##Artifact structure
-``
-task03-ci_dynamic_env
+````bash
+ci-environment
 ├── Documentation
 │   ├── diagram.png
 │   └── diagram.xml
@@ -25,8 +25,7 @@ task03-ci_dynamic_env
 │   └── gitserver.sh
 ├── readme.md
 └── vagrantfile
-
-``
+````
 
 
 ##The Configuration File

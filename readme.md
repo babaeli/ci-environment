@@ -1,7 +1,7 @@
-##Task #3: Building a Dynamic CI Infrastructure##
+# Task #3: Building a Dynamic CI Infrastructure ##
 
 
-##CI servers table##
+## CI servers table ##
 
   | IP ADDR      | HOST NAME         | COMPONENTS to INSTALL | PORTS EXPOSED TO HOST (vm port->host) |
   | -------------| ---------------   | ----- | ----- |
@@ -10,7 +10,7 @@
   | 172.16.1.103 | buildserver.cilab| `jenkins`, `SCM tools`, `BUILD tools` | 8080->38080 |
   | 172.16.1.104 | buildnode.cilab | `SCM tools`, `BUILD tools` | 80->38095 |
 
-##Artifact structure
+## Artifact structure
 ````bash
 ci-environment
 ├── Documentation
@@ -29,7 +29,7 @@ ci-environment
 ````
 
 
-##The Configuration File
+## The Configuration File
 Here i'm going to demonstrates how to do this, using a **hosts** file
 
 First we create hosts configuration file, and put it in a **config/** directory:
@@ -43,7 +43,7 @@ EOF
 ```
 
 
-##The Vagrantfile
+## The Vagrantfile
 As the Vagrant’s configuration ,`Vagrantfile`, is a ruby script we can build our ci environment.
 We read in the configuration file, and then use this to dynamically spin up the systems.
 
@@ -53,7 +53,7 @@ This script has the following feartures
 - Configure port forwarding to allow you to access a ports on host machine and have all data forwarded to a virtual guest ports
 - Provisioning shell scripts based on **hostname** for each system in located in the `machine-user-data/`
 
-##Access to ci servers
+## Access - CI Servers
 We spoke earier about hosts exposed ports on each system.  
 We can open our host browser and browse into desired system.
 

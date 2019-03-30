@@ -1,7 +1,7 @@
-#Task #3: Building a Dynamic CI Infrastructure
+##Task #3: Building a Dynamic CI Infrastructure##
 
 
-##CI servers table
+##CI servers table##
 
   | IP ADDR      | HOST NAME         | COMPONENTS to INSTALL | PORTS EXPOSED TO HOST (vm port->host) |
   | -------------| ---------------   | ----- | ----- |

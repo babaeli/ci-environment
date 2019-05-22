@@ -41,7 +41,7 @@ properties(
          script: "docker build -t ${artifactName}:${artifactVersion} ."
       }
    }
-   stage('Results') {
+   stage('Publish') {
       nexusPublisher nexusInstanceId: 'nexus',
        nexusRepositoryId: 'maven-snapshots',
        packages: [[$class: 'MavenPackage',

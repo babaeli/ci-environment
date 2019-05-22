@@ -3,6 +3,7 @@ node {
    def artifactName
    def artifactVersion
    def _pom
+   def artifactServer
 properties(
    [parameters([
       choice(choices: ['master', 'develop'], description: '', name: 'branch'),
@@ -16,6 +17,7 @@ properties(
       _pom = readMavenpom file: 'pom.xml'
       artifactName=artifact_name
       artifactVersion="${_pom.version}-${BUILD_NUMBER}"
+      artifactServer=172.16.4.101
    }
    stage('Build') {
        {
@@ -42,6 +44,16 @@ properties(
       }
    }
    stage('Publish') {
+      withCredentials([
+         usernamePassword(credentialsId: 'nexus',
+          passwordVariable: 'passd',
+          usernameVariable: 'user')
+          ]) 
+      sh """
+		  docker login -u ${user} -p ${passd} ${artifactServer}:8123
+		  docker tag ${artifactName}:${env.BUILD_ID} ${artifactServer}:8123/${artifactName}:${artifactVersion}
+		  docker push ${artifactServer}:8123/${artifactName}:${artifactVersion}
+		"""
       nexusPublisher nexusInstanceId: 'nexus',
        nexusRepositoryId: 'maven-snapshots',
        packages: [[$class: 'MavenPackage',

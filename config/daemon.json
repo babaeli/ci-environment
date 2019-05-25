@@ -1,0 +1,8 @@
+{
+  "insecure-registries": [
+      "172.16.4.101:8081",
+      "172.16.4.101:8082",
+      "172.16.4.101:8083"
+   ],
+"disable-legacy-registry": true
+}

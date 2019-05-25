@@ -2,6 +2,7 @@ node {
    def mvnHome
    def artifactName
    def artifactVersion
+   def artifactPath
    def _pom
    properties(
      [parameters([
@@ -16,8 +17,11 @@ node {
       git url: 'https://github.com/zivkashtan/course.git'
       mvnHome = tool name: '3.6', type: 'maven'
       _pom = readMavenPom file: 'pom.xml'
-      artifactName=artifact_name      
+      artifactName=artifact_name     
       artifactVersion="${_pom.version}-${BUILD_NUMBER}"
+      artifactWar="${artifactName}.war"
+      artifactPath="web/target"
+      
    }
    stage('Build') {
       if (branch=="develop"){
@@ -49,12 +53,24 @@ node {
         packaging: 'war',
         version: "${artifactVersion}"
       ]]]
-      withCredentials([usernamePassword(credentialsId: 'nexus-auth', passwordVariable: 'pssd', usernameVariable: 'usrName')]) {
+      withCredentials([usernamePassword(credentialsId: 'nexus', passwordVariable: 'pssd', usernameVariable: 'usrName')]) {
         sh """
-          docker login -u ${usrName} -p ${pssd} localhost:8083
-          docker tag ${artifactName}:${artifactVersion} localhost:8083/${artifactName}:${artifactVersion}
-          docker push localhost:8083/${artifactName}:${artifactVersion}
+          docker login -u ${usrName} -p ${pssd} 172.16.4.101:8083
+          docker tag ${artifactName}:${artifactVersion} 172.16.4.101:8083/${artifactName}:${artifactVersion}
+          docker push 172.16.4.101:8083/${artifactName}:${artifactVersion}
         """
       }
    }
-}
+   stage('deployment') {
+      if (deployment_method=="ansible") {
+      withEnv(["artifactWar=${artifactName}.war", "artifactPath=web/target"]) {
+        ansiblePlaybook become: true,
+         colorized: true,
+         disableHostKeyChecking: true,
+         installation: 'ansible',
+         inventory: '/usr/myansible/inventory',
+         playbook: '/usr/myansible/playbooks/tomcat-war.yaml'
+        }
+      }
+    }
+  }

@@ -1,8 +1,15 @@
-{
-  "insecure-registries" : [
-      "172.16.4.101:8081"
-      "172.16.4.101:8082"
-      "172.16.4.101:8083"
-],
-"disable-legacy-registry": true
-}
+---
+- name: install tomcat server
+  hosts: deploy
+  become: yes
+  tasks:
+      - name: install tomcat
+        yum:
+          name: tomcat
+          state: present
+
+      - name: start and enable tomcat
+        systemd:
+          name: tomcat
+          state: started
+          enabled: yes

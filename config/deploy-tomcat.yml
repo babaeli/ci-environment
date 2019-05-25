@@ -1,0 +1,22 @@
+---
+- hosts: deploy
+  become: yes
+  vars:
+  - warName: "{{ lookup('env','artifactWar') }}"
+  - warRemotePath: /usr/share/tomcat/webapps
+  - warLocalPath: /var/lib/jenkins/workspace/yatosh_ans/web/target
+
+  tasks:
+  - name: Download WAR to server
+    copy: 
+      src: "{{ warLocalPath }}/{{ warName }}"
+      dest: "{{ warRemotePath }}/{{ warName }}"
+    notify:
+        - Restart tomcat
+
+  - name: Delete remote war file
+    file: path="{{ warRemotePath }}/{{ warName }}" state=absent
+
+  handlers:
+    - name: Restart tomcat
+      systemd: name=tomcat state=restarted
